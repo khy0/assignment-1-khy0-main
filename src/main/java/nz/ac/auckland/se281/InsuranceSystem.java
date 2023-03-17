@@ -1,6 +1,12 @@
 package nz.ac.auckland.se281;
 
 import nz.ac.auckland.se281.Main.PolicyType;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Database {
+  
+}
 
 public class InsuranceSystem {
   public InsuranceSystem() {
