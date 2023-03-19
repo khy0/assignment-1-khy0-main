@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -13,20 +14,22 @@ public class Database {
     ArrayList<String> userList = new ArrayList<>();
     ArrayList<Integer> ageList = new ArrayList<>();
 
-    String userInput = sc.nextLine();
+    String userInput = sc.next();
     userList.add(userInput);
     Integer ageInput = sc.nextInt();
     ageList.add(ageInput);
 
     String[] userDatabase = userList.toArray(new String[0]);
-    Integer[] ageDatabase = ageList.toArray(new Integer[0]);
+    int[] ageDatabase = ageList.stream().mapToInt(i -> i).toArray();
+
+    unique(userDatabase);
+
+    sc.close();
   }
 
   public void unique(String[] userDatabase) {
-    Set<String> set = new HashSet<>();
+    Set<String> set = new HashSet<>(Arrays.asList(userDatabase));
 
-    for (String element : userDatabase) {
-      set.add(element);
-    }
+    String[] uniqueDatabase = set.toArray(new String[0]);
   }
 }

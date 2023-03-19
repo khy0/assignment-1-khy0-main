@@ -1,8 +1,8 @@
 package nz.ac.auckland.se281;
 
 import nz.ac.auckland.se281.Main.PolicyType;
-import java.util.ArrayList;
-import java.util.Scanner;
+//import java.util.ArrayList;
+//import java.util.Scanner;
 
 public class InsuranceSystem {
   public InsuranceSystem() {
@@ -13,9 +13,10 @@ public class InsuranceSystem {
     
   }
 
-  public void createNewProfile(String userName, String age) {
+  public void createNewProfile(String userName, String age, String[] uniqueDatabase) {
     Database obj = new Database();
     obj.storeInDatabase(userName, age);
+
   }
 
   public void loadProfile(String userName) {
