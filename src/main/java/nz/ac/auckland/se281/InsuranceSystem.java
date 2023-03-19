@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 
 import nz.ac.auckland.se281.Main.PolicyType;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class InsuranceSystem {
   public InsuranceSystem() {
@@ -8,11 +10,18 @@ public class InsuranceSystem {
   }
 
   public void printDatabase() {
-    // TODO: Complete this method.
+  
   }
 
   public void createNewProfile(String userName, String age) {
-    // TODO: Complete this method.
+    Scanner sc = new Scanner(System.in);
+    ArrayList<String> userList = new ArrayList<>();
+
+    String userInput = sc.nextLine();
+    userList.add(userInput);
+
+    String[] userDatabase = userList.toArray(new String[0]);
+    
   }
 
   public void loadProfile(String userName) {
