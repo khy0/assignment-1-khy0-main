@@ -9,8 +9,8 @@ public class InsuranceSystem {
     // Only this constructor can be used (if you need to initialise fields).
   }
 
-  public void printDatabase() {
-    
+  public void printDatabase(String[] userDatabase) {
+    if userDatabase
   }
 
   public void createNewProfile(String userName, String age, String[] uniqueDatabase) {
