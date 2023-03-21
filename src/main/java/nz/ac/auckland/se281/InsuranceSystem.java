@@ -17,8 +17,10 @@ public class InsuranceSystem {
 
   public void printDatabase() {
     ArrayList<String> userDatabase = obj.getUserDatabase();
+    System.out.printf("Database has %s profile%s%s", );
+
     for (int i=0; i < userDatabase.size(); i++){
-      System.out.println(userDatabase.get(i));
+      System.out.printf("%d: %s, %n", i+1, userDatabase.get(i));
     }
   }
 

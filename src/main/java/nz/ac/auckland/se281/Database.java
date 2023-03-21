@@ -8,9 +8,9 @@ import java.util.Set;
 public class Database {
 
   private ArrayList<String> userDatabase;
+
   public Database() {
     userDatabase = new ArrayList<>();
-
   }
 
   public ArrayList<String> getUserDatabase() {
