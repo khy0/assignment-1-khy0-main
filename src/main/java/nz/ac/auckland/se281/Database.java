@@ -3,14 +3,22 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Database {
 
+  private ArrayList<String> userDatabase;
+  public Database() {
+    userDatabase = new ArrayList<>();
+
+  }
+
+  public ArrayList<String> getUserDatabase() {
+    return userDatabase;
+  }
+
   public void storeInDatabase(String userName, String age) {
-    String[] userDatabase = new String[1];
-    userDatabase[0] = userName;
+    userDatabase.add(userName);
   }
 
   public void unique(String[] userDatabase) {
