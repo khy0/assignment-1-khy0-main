@@ -26,7 +26,6 @@ public class Database {
 
   public void storeInDatabase(String userName, String age) {
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
-    age = age.substring(0, 1).toUpperCase() + age.substring(1).toLowerCase();
     userDatabase.add(userName);
     ageDatabase.add(age);
   }
