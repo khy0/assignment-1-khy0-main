@@ -1,10 +1,10 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-//import org.apache.commons.text.WordUtils;;
+// import java.util.Arrays;
+// import java.util.HashSet;
+// import java.util.Set;
+// import org.apache.commons.text.WordUtils;;
 
 public class Database {
 
@@ -28,12 +28,11 @@ public class Database {
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     userDatabase.add(userName);
     ageDatabase.add(age);
-    
   }
 
   public void unique(String[] userDatabase) {
-    //Set<String> set = new HashSet<>(Arrays.asList(userDatabase));
+    // Set<String> set = new HashSet<>(Arrays.asList(userDatabase));
 
-    //String[] uniqueDatabase = set.toArray(new String[0]);
+    // String[] uniqueDatabase = set.toArray(new String[0]);
   }
 }
