@@ -28,11 +28,12 @@ public class Database {
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     userDatabase.add(userName);
     ageDatabase.add(age);
+    
   }
 
   public void unique(String[] userDatabase) {
-    Set<String> set = new HashSet<>(Arrays.asList(userDatabase));
+    //Set<String> set = new HashSet<>(Arrays.asList(userDatabase));
 
-    String[] uniqueDatabase = set.toArray(new String[0]);
+    //String[] uniqueDatabase = set.toArray(new String[0]);
   }
 }

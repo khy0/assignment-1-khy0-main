@@ -1,7 +1,10 @@
 package nz.ac.auckland.se281;
 
-import java.util.ArrayList;
 import nz.ac.auckland.se281.Main.PolicyType;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 // import java.util.ArrayList;
 // import java.util.Scanner;
 
@@ -32,7 +35,20 @@ public class InsuranceSystem {
   }
 
   public void createNewProfile(String userName, String age) {
-    obj.storeInDatabase(userName, age);
+    // obj.storeInDatabase(userName, age);
+    ArrayList<String> userDatabase = obj.getUserDatabase();
+    ArrayList<String> ageDatabase = obj.getAgeDatabase();
+
+    HashSet<String> uniqueSet = new HashSet<String>(userDatabase);
+
+    for (int i = 0; i < userDatabase.size(); i++) {
+      if (uniqueSet.size() == userDatabase.size()) {
+        System.out.printf("New profile created for %s with age %s", userDatabase.get(i), ageDatabase.get(i));
+      }
+      else {
+        System.out.printf("Usernames must be unique. No profile was created for '%s'.", userDatabase.get(i));
+      }
+    }
   }
 
   public void loadProfile(String userName) {
