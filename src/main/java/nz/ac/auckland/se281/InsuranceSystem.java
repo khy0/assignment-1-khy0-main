@@ -1,7 +1,6 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
-
 import nz.ac.auckland.se281.Main.PolicyType;
 // import java.util.ArrayList;
 // import java.util.Scanner;
@@ -9,18 +8,19 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private Database obj;
+
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
     obj = new Database();
-    //obj.storeInDatabase(userName, age);
   }
 
   public void printDatabase() {
     ArrayList<String> userDatabase = obj.getUserDatabase();
-    System.out.printf("Database has %s profile%s%s", );
+    ArrayList<String> ageDatabase = obj.getUserDatabase();
+    // System.out.printf("Database has %s profile%s%s");
 
-    for (int i=0; i < userDatabase.size(); i++){
-      System.out.printf("%d: %s, %n", i+1, userDatabase.get(i));
+    for (int i = 0; i < userDatabase.size(); i++) {
+      System.out.printf("%d: %s, %n", i + 1, userDatabase.get(i), ageDatabase.get(i));
     }
   }
 
