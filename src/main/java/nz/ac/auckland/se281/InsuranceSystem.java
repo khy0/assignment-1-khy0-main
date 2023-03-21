@@ -40,6 +40,7 @@ public class InsuranceSystem {
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
 
     HashSet<String> uniqueSet = new HashSet<String>(userDatabase);
+    int ageInt = Integer.parseInt(age);
 
     for (int i = 0; i < userDatabase.size(); i++) {
       if (uniqueSet.size() == userDatabase.size()) {
@@ -54,6 +55,12 @@ public class InsuranceSystem {
       }
       else if (userName.length() < 3) {
         System.out.printf("%s is an invalid username, it should be at least 3 characters long. No profile was created.", userDatabase.get(i));
+      }
+      if (ageInt > 0) {
+        System.out.printf("New profile created for %s with age %s", userDatabase.get(i), ageDatabase.get(i));
+      }
+      else if (ageInt < 0) {
+        System.out.printf("%s is an invalid age, please provide a positive whole number only. No profile was created for %s.", ageDatabase.get(i), userDatabase.get(i));
       }
     }
   }
