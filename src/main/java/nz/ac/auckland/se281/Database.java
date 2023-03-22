@@ -38,24 +38,24 @@ public class Database {
 
     // Checking if the string is unique, has more than 3 characters and the age is a positive integer
     if (uniqueSet.size() == userDatabase.size() && userName.length() >= 3 && ageInt > 0) {
-      System.out.printf("New profile created for %s with age %s.", userName, age);
+      System.out.printf("New profile created for %s with age %s.%n", userName, age);
     } else if (uniqueSet.size() != userDatabase.size()) {
       userDatabase.remove(userName);
       ageDatabase.remove(age);
-      System.out.printf("Usernames must be unique. No profile was created for '%s'.", userName);
+      System.out.printf("Usernames must be unique. No profile was created for '%s'.%n", userName);
     } else if (userName.length() < 3) {
       userDatabase.remove(userName);
       ageDatabase.remove(age);
       System.out.printf(
           "'%s' is an invalid username, it should be at least 3 characters long. No profile was"
-              + " created.",
+              + " created.%n",
           userName);
     } else if (ageInt < 0) {
       userDatabase.remove(userName);
       ageDatabase.remove(age);
       System.out.printf(
           "'%s' is an invalid age, please provide a positive whole number only. No profile was"
-              + " created for %s.",
+              + " created for %s.%n",
           age, userName);
     }
   }
