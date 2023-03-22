@@ -1,12 +1,12 @@
 package nz.ac.auckland.se281;
 
-import nz.ac.auckland.se281.Main.PolicyType;
 import java.util.ArrayList;
-//import java.util.Arrays;
-import java.util.HashSet;
-//import java.util.Set;
+// import java.util.Arrays;
+// import java.util.HashSet;
+// import java.util.Set;
 // import java.util.ArrayList;
 // import java.util.Scanner;
+import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
 
@@ -35,34 +35,7 @@ public class InsuranceSystem {
   }
 
   public void createNewProfile(String userName, String age) {
-    // obj.storeInDatabase(userName, age);
-    ArrayList<String> userDatabase = obj.getUserDatabase();
-    ArrayList<String> ageDatabase = obj.getAgeDatabase();
-
-    HashSet<String> uniqueSet = new HashSet<String>(userDatabase);
-    int ageInt = Integer.parseInt(age);
-
-    for (int i = 0; i < userDatabase.size(); i++) {
-      if (uniqueSet.size() == userDatabase.size()) {
-        obj.storeInDatabase(userName, age);
-        System.out.printf("New profile created for %s with age %s", userDatabase.get(i), ageDatabase.get(i));
-      }
-      else if (uniqueSet.size() != userDatabase.size()){
-        System.out.printf("Usernames must be unique. No profile was created for %s.", userDatabase.get(i));
-      }
-      if (userName.length() >= 3) {
-        System.out.printf("New profile created for %s with age %s", userDatabase.get(i), ageDatabase.get(i));
-      }
-      else if (userName.length() < 3) {
-        System.out.printf("%s is an invalid username, it should be at least 3 characters long. No profile was created.", userDatabase.get(i));
-      }
-      if (ageInt > 0) {
-        System.out.printf("New profile created for %s with age %s", userDatabase.get(i), ageDatabase.get(i));
-      }
-      else if (ageInt < 0) {
-        System.out.printf("%s is an invalid age, please provide a positive whole number only. No profile was created for %s.", ageDatabase.get(i), userDatabase.get(i));
-      }
-    }
+    obj.storeInDatabase(userName, age);
   }
 
   public void loadProfile(String userName) {
