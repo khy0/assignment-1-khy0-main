@@ -73,9 +73,16 @@ public class InsuranceSystem {
 
   public void deleteProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
+    ArrayList<String> ageDatabase = obj.getAgeDatabase();
+    userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     if (userDatabase.contains(userName)){
-      userDatabase.remove(userName);
-      System.out.println("Profile deleted for %s.");
+      for (int i = 0; i < userDatabase.size(); i++) {
+        if (userDatabase.get(i).equals(userName)){
+          userDatabase.remove(userName);
+          ageDatabase.remove(i);
+          System.out.printf("Profile deleted for %s.%n", userName);
+        }
+      }
     }
     else {
       System.out.printf("No profile found for %s. No profile was deleted.%n", userName);
