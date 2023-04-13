@@ -2,14 +2,14 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 
-import org.eclipse.jgit.transport.CredentialItem.Username;
+//import org.eclipse.jgit.transport.CredentialItem.Username;
 
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
 
   private Database obj;
-  private boolean isLoaded = false;
+  public boolean isLoaded = false;
   String name;
 
   public InsuranceSystem() {
@@ -46,6 +46,7 @@ public class InsuranceSystem {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     if (userDatabase.contains(userName)){
+      userDatabase.remove(userName);
       System.out.printf("Profile loaded for %s.%n", userName);
       isLoaded = true;
       name = userName;
@@ -59,17 +60,26 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
+    ArrayList<String> userDatabase = obj.getUserDatabase();
     if (isLoaded = true){
       isLoaded = false;
+      userDatabase.add(name);
       System.out.printf("Profile unloaded for %s.%n", name);
     }
-    else {
+    else{
       System.out.println("No profile is currently loaded.");
     }
   }
 
   public void deleteProfile(String userName) {
-    // TODO: Complete this method.
+    ArrayList<String> userDatabase = obj.getUserDatabase();
+    if (userDatabase.contains(userName)){
+      userDatabase.remove(userName);
+      System.out.println("Profile deleted for %s.");
+    }
+    else {
+      System.out.printf("No profile found for %s. No profile was deleted.%n", userName);
+    }
   }
 
   public void createPolicy(PolicyType type, String[] options) {
