@@ -1,11 +1,16 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+
+import org.eclipse.jgit.transport.CredentialItem.Username;
+
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
 
   private Database obj;
+  private boolean isLoaded = false;
+  String name;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -38,11 +43,29 @@ public class InsuranceSystem {
   }
 
   public void loadProfile(String userName) {
-    // TODO: Complete this method.
+    ArrayList<String> userDatabase = obj.getUserDatabase();
+    userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
+    if (userDatabase.contains(userName)){
+      System.out.printf("Profile loaded for %s.%n", userName);
+      isLoaded = true;
+      name = userName;
+    }
+    //else if (isLoaded = true){
+      //System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", userName);
+    //}
+    else {
+      System.out.printf("No profile found for %s. Profile not loaded.%n", userName);
+    }
   }
 
   public void unloadProfile() {
-    // TODO: Complete this method.
+    if (isLoaded = true){
+      isLoaded = false;
+      System.out.printf("Profile unloaded for %s.%n", name);
+    }
+    else {
+      System.out.println("No profile is currently loaded.");
+    }
   }
 
   public void deleteProfile(String userName) {
