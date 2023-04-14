@@ -9,7 +9,7 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private Database obj;
-  public boolean isLoaded = false;
+  //public boolean isLoaded = false;
   String name;
 
   public InsuranceSystem() {
@@ -44,16 +44,19 @@ public class InsuranceSystem {
 
   public void loadProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
+    ArrayList<String> loadedUser = obj.getLoadedUser();
+
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     if (userDatabase.contains(userName)){
       userDatabase.remove(userName);
-      System.out.printf("Profile loaded for %s.%n", userName);
-      isLoaded = true;
+      loadedUser.add(userName);
+      //isLoaded = true;
       name = userName;
+      System.out.printf("Profile loaded for %s.%n", userName);
     }
-    //else if (isLoaded = true){
-      //System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", userName);
-    //}
+    else if (loadedUser.contains(userName)){
+      System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", userName);
+    }
     else {
       System.out.printf("No profile found for %s. Profile not loaded.%n", userName);
     }
@@ -61,9 +64,12 @@ public class InsuranceSystem {
 
   public void unloadProfile() {
     ArrayList<String> userDatabase = obj.getUserDatabase();
-    if (isLoaded = true){
-      isLoaded = false;
+    ArrayList<String> loadedUser = obj.getLoadedUser();
+
+    if (loadedUser.size() == 1){
+      //isLoaded = false;
       userDatabase.add(name);
+      loadedUser.remove(name);
       System.out.printf("Profile unloaded for %s.%n", name);
     }
     else{
