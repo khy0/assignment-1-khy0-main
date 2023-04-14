@@ -24,14 +24,14 @@ public class Database {
     return ageDatabase;
   }
 
-  public ArrayList<String> getLoadedUser(){
+  public ArrayList<String> getLoadedUser() {
     return loadedUser;
   }
 
   public void storeInDatabase(String userName, String age) {
     // Processes the string in title case
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
-    
+
     // Adds the userName and age to the database ArrayLists
     userDatabase.add(userName);
     ageDatabase.add(age);
@@ -42,7 +42,8 @@ public class Database {
     // Converting age string to age integer
     int ageInt = Integer.parseInt(age);
 
-    // Checking if the string is unique, has more than 3 characters and the age is a positive integer
+    // Checking if the string is unique, has more than 3 characters and the age is a positive
+    // integer
     if (uniqueSet.size() == userDatabase.size() && userName.length() >= 3 && ageInt > 0) {
       System.out.printf("New profile created for %s with age %s.%n", userName, age);
     } else if (uniqueSet.size() != userDatabase.size()) {
