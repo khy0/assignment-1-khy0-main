@@ -18,6 +18,7 @@ public class InsuranceSystem {
     // Calling both userDatabase and ageDatabase arrays
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
+    ArrayList<String> loadedUser = obj.getLoadedUser();
 
     // Checks how many profiles there are in the database and prints it
     if (userDatabase.size() == 0) {
@@ -30,13 +31,26 @@ public class InsuranceSystem {
 
     // Loops through the ArrayList and prints both the user and age databases
     for (int i = 0; i < userDatabase.size(); i++) {
-      System.out.printf("%d: %s, %s%n", i + 1, userDatabase.get(i), ageDatabase.get(i));
+      if (loadedUser.size() == 1 && userDatabase.get(i) == name){
+        System.out.printf(" %s%s: %s, %s%n", "*** ", i+1, userDatabase.get(i), ageDatabase.get(i));
+      }
+      else{
+        System.out.printf("%d: %s, %s%n", i + 1, userDatabase.get(i), ageDatabase.get(i));
+      }
     }
   }
 
   public void createNewProfile(String userName, String age) {
-    // Calling previously made function from Database class
-    obj.storeInDatabase(userName, age);
+    ArrayList<String> loadedUser = obj.getLoadedUser();
+    userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
+    
+    if (loadedUser.size() == 1){
+      System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", userName);
+    }
+    else {
+      // Calling previously made function from Database class
+      obj.storeInDatabase(userName, age);
+    }
   }
 
   public void loadProfile(String userName) {
@@ -50,10 +64,13 @@ public class InsuranceSystem {
       // isLoaded = true;
       name = userName;
       System.out.printf("Profile loaded for %s.%n", userName);
-    } else if (loadedUser.contains(userName)) {
-      System.out.printf(
-          "Cannot create a new profile. First unload the profile for %s.%n", userName);
-    } else {
+    } 
+    //if (loadedUser.size() > 1){
+      //for (int i = loadedUser.size() - 1; i > 0; i--){
+
+      //}
+    //}
+    else {
       System.out.printf("No profile found for %s. Profile not loaded.%n", userName);
     }
   }
@@ -75,9 +92,14 @@ public class InsuranceSystem {
   public void deleteProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
+    ArrayList<String> loadedUser = obj.getLoadedUser();
 
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
-    if (userDatabase.contains(userName)) {
+    
+    if (loadedUser.size() == 1){
+      System.out.printf("Cannot delete profile for %s while loaded. No profile was deleted.%n", userName);
+    }
+    else if (userDatabase.contains(userName)) {
       for (int i = 0; i < userDatabase.size(); i++) {
         if (userDatabase.get(i).equals(userName)) {
           userDatabase.remove(userName);
