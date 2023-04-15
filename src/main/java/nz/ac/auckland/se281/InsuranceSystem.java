@@ -6,7 +6,6 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private Database obj;
-  // public boolean isLoaded = false;
   String name;
 
   public InsuranceSystem() {
@@ -15,6 +14,7 @@ public class InsuranceSystem {
   }
 
   public void printDatabase() {
+
     // Calling both userDatabase and ageDatabase arrays
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
@@ -29,12 +29,11 @@ public class InsuranceSystem {
       System.out.printf("Database has %s profile%s%s%n", userDatabase.size(), "s", ":");
     }
 
-    // Loops through the ArrayList and prints both the user and age databases
+    //Print the currently loaded profile with *** before the name and the unloaded profiles without it
     for (int i = 0; i < userDatabase.size(); i++) {
-      if (loadedUser.size() == 1 && userDatabase.get(i) == name){
-        System.out.printf(" %s%s: %s, %s%n", "*** ", i+1, userDatabase.get(i), ageDatabase.get(i));
-      }
-      else{
+      if (loadedUser.contains(userDatabase.get(i))) {
+        System.out.printf("*** %d: %s, %s%n", i + 1, loadedUser.get(0), ageDatabase.get(i));
+      } else {
         System.out.printf("%d: %s, %s%n", i + 1, userDatabase.get(i), ageDatabase.get(i));
       }
     }
@@ -45,7 +44,7 @@ public class InsuranceSystem {
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
     
     if (loadedUser.size() == 1){
-      System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", userName);
+      System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", name);
     }
     else {
       // Calling previously made function from Database class
@@ -53,41 +52,47 @@ public class InsuranceSystem {
     }
   }
 
+  //private ArrayList<String> originalUserDatabase = null; // new variable to store original userDatabase
+
   public void loadProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
 
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
-    if (userDatabase.contains(userName)) {
-      userDatabase.remove(userName);
+    // If the user is in the database and there is no profile loaded, load the profile
+    if (userDatabase.contains(userName) && loadedUser.size() == 0) {
       loadedUser.add(userName);
-      // isLoaded = true;
       name = userName;
       System.out.printf("Profile loaded for %s.%n", userName);
-    } 
-    //if (loadedUser.size() > 1){
-      //for (int i = loadedUser.size() - 1; i > 0; i--){
-
-      //}
-    //}
-    else {
+    }
+    // If the user is in the database and there is a profile loaded, unload the profile and load the new profile
+    else if (userDatabase.contains(userName) && loadedUser.size() == 1) {
+      //originalUserDatabase = userDatabase; // store original userDatabase in new variable
+      //userDatabase.remove(loadedUser.get(0)); // remove loaded profile from userDatabase
+      loadedUser.remove(0); // remove loaded profile from loadedUser
+      loadedUser.add(userName); // add new profile to loadedUser
+      name = userName;
+      System.out.printf("Profile loaded for %s.%n", userName);
+    }
+  else {
       System.out.printf("No profile found for %s. Profile not loaded.%n", userName);
-    }
   }
+}
+  
+public void unloadProfile() {
+  //ArrayList<String> userDatabase = obj.getUserDatabase();
+  ArrayList<String> loadedUser = obj.getLoadedUser();
 
-  public void unloadProfile() {
-    ArrayList<String> userDatabase = obj.getUserDatabase();
-    ArrayList<String> loadedUser = obj.getLoadedUser();
-
-    if (loadedUser.size() == 1) {
-      // isLoaded = false;
-      userDatabase.add(name);
-      loadedUser.remove(name);
-      System.out.printf("Profile unloaded for %s.%n", name);
-    } else {
-      System.out.println("No profile is currently loaded.");
-    }
+  if (loadedUser.size() == 1) {
+    // remove loaded profile from loadedUser and add to userDatabase with original index position from before it was loaded
+    //userDatabase.add(loadedUser.get(0));
+    loadedUser.remove(0);
+    System.out.printf("Profile unloaded for %s.%n", name);
+  } 
+  else {
+    System.out.println("No profile is currently loaded.");
   }
+}
 
   public void deleteProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
