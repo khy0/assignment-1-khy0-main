@@ -52,9 +52,6 @@ public class InsuranceSystem {
     }
   }
 
-  // private ArrayList<String> originalUserDatabase = null; // new variable to store original
-  // userDatabase
-
   public void loadProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
@@ -69,8 +66,6 @@ public class InsuranceSystem {
     // If the user is in the database and there is a profile loaded, unload the profile and load the
     // new profile
     else if (userDatabase.contains(userName) && loadedUser.size() == 1) {
-      // originalUserDatabase = userDatabase; // store original userDatabase in new variable
-      // userDatabase.remove(loadedUser.get(0)); // remove loaded profile from userDatabase
       loadedUser.remove(0); // remove loaded profile from loadedUser
       loadedUser.add(userName); // add new profile to loadedUser
       name = userName;
@@ -81,13 +76,11 @@ public class InsuranceSystem {
   }
 
   public void unloadProfile() {
-    // ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
 
     if (loadedUser.size() == 1) {
       // remove loaded profile from loadedUser and add to userDatabase with original index position
       // from before it was loaded
-      // userDatabase.add(loadedUser.get(0));
       loadedUser.remove(0);
       System.out.printf("Profile unloaded for %s.%n", name);
     } else {
