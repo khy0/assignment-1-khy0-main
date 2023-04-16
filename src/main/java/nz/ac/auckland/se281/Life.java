@@ -1,5 +1,5 @@
 package nz.ac.auckland.se281;
 
-public class Life {
+public class Life extends Policy{
     
 }

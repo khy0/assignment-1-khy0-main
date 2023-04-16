@@ -1,5 +1,5 @@
 package nz.ac.auckland.se281;
 
-public class Car {
+public class Car extends Policy{
     
 }

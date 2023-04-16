@@ -112,6 +112,15 @@ public class InsuranceSystem {
   }
 
   public void createPolicy(PolicyType type, String[] options) {
-    // TODO: Complete this method.
+    ArrayList<String> loadedUser = obj.getLoadedUser();
+    String policyTypeString = type.toString();
+    String policyType = policyTypeString.toLowerCase();
+
+    if ((loadedUser.size() == 1)){
+      System.out.printf("New %s policy created for %s.%n", policyType, name);
+    }
+    else {
+      System.out.println("Need to load a profile in order to create a policy.");
+    }
   }
 }
