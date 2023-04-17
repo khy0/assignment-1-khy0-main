@@ -8,12 +8,14 @@ public class Database {
   private ArrayList<String> userDatabase;
   private ArrayList<String> ageDatabase;
   private ArrayList<String> loadedUser;
+  private ArrayList<String> userPolicies;
 
   public Database() {
     // Defining ArrayLists for user and age
     userDatabase = new ArrayList<>();
     ageDatabase = new ArrayList<>();
     loadedUser = new ArrayList<>();
+    userPolicies = new ArrayList<>();
   }
 
   public ArrayList<String> getUserDatabase() {
@@ -26,6 +28,10 @@ public class Database {
 
   public ArrayList<String> getLoadedUser() {
     return loadedUser;
+  }
+
+  public ArrayList<String> getUserPolicies() {
+    return userPolicies;
   }
 
   public void storeInDatabase(String userName, String age) {

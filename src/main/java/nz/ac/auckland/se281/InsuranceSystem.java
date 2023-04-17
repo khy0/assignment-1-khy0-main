@@ -1,12 +1,14 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import nz.ac.auckland.se281.Main.PolicyType;
 
 public class InsuranceSystem {
 
   private Database obj;
   String name;
+  int numberOfPolicies = 0;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -19,7 +21,8 @@ public class InsuranceSystem {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
-
+    ArrayList<String> userPolicies = obj.getUserPolicies();
+  
     // Checks how many profiles there are in the database and prints it
     if (userDatabase.size() == 0) {
       System.out.printf("Database has %s profile%s%s%n", 0, "s", ".");
@@ -28,17 +31,33 @@ public class InsuranceSystem {
     } else {
       System.out.printf("Database has %s profile%s%s%n", userDatabase.size(), "s", ":");
     }
-
-    // Print the currently loaded profile with *** before the name and the unloaded profiles without
-    // it
+  
+    // Print the currently loaded profile with *** before the name and the unloaded profiles without it
     for (int i = 0; i < userDatabase.size(); i++) {
-      if (loadedUser.contains(userDatabase.get(i))) {
-        System.out.printf("*** %d: %s, %s%n", i + 1, loadedUser.get(0), ageDatabase.get(i));
+      HashMap<String, Integer> countMap = new HashMap<>();
+      String user = userDatabase.get(i);
+      for (String policyUser : userPolicies) {
+        if (policyUser.equals(user)) {
+          countMap.put(policyUser, countMap.getOrDefault(policyUser, 0) + 1);
+        }
+      }
+      int numberOfPolicies = countMap.getOrDefault(user, 0);
+      if (loadedUser.contains(user)) {
+        if (numberOfPolicies == 1) {
+          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+        } else {
+          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+        }
       } else {
-        System.out.printf("%d: %s, %s%n", i + 1, userDatabase.get(i), ageDatabase.get(i));
+        if (numberOfPolicies == 1) {
+          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y");
+        } else {
+          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies");
+        }
       }
     }
   }
+  
 
   public void createNewProfile(String userName, String age) {
     ArrayList<String> loadedUser = obj.getLoadedUser();
@@ -116,8 +135,11 @@ public class InsuranceSystem {
     String policyTypeString = type.toString();
     String policyType = policyTypeString.toLowerCase();
 
+    ArrayList<String> userPolicies = obj.getUserPolicies();
+
     if ((loadedUser.size() == 1)){
       System.out.printf("New %s policy created for %s.%n", policyType, name);
+      userPolicies.add(name);
     }
     else {
       System.out.println("Need to load a profile in order to create a policy.");
