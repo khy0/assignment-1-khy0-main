@@ -7,8 +7,10 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private Database obj;
-  String name;
+  private String name;
   int numberOfPolicies = 0;
+  private String policyType;
+  private String[] options;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
@@ -44,7 +46,11 @@ public class InsuranceSystem {
       int numberOfPolicies = countMap.getOrDefault(user, 0);
       if (loadedUser.contains(user)) {
         if (numberOfPolicies == 1) {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+          if (policyType == "home"){
+            System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf("\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n", options[1], options[0]);
+          }
+          
         } else {
           System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
         }
@@ -133,7 +139,7 @@ public class InsuranceSystem {
   public void createPolicy(PolicyType type, String[] options) {
     ArrayList<String> loadedUser = obj.getLoadedUser();
     String policyTypeString = type.toString();
-    String policyType = policyTypeString.toLowerCase();
+    policyType = policyTypeString.toLowerCase();
 
     ArrayList<String> userPolicies = obj.getUserPolicies();
 
