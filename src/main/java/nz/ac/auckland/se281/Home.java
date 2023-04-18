@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281;
 
 public class Home extends Policy {
-    int basePremium;
+    int homeBasePremium;
     int sumInsured = Integer.parseInt(options[0]);
     boolean isRented = Boolean.parseBoolean(options[2]);
 
@@ -12,9 +12,9 @@ public class Home extends Policy {
     @Override
     public void calculateBasePremium() {
         if (isRented == true) {
-            basePremium = (int) (sumInsured * 0.02);
+            homeBasePremium = (int) (sumInsured * 0.02);
         } else {
-            basePremium = (int) (sumInsured * 0.01);
+            homeBasePremium = (int) (sumInsured * 0.01);
         }
     }
 }
