@@ -7,14 +7,32 @@ import nz.ac.auckland.se281.Main.PolicyType;
 public class InsuranceSystem {
 
   private Database obj;
-  private String name;
+
+  String name;
   int numberOfPolicies = 0;
-  private String policyType;
-  private String[] options;
+  String policyType;
+  String[] options;
+  int totalPremium = 0;
+  String age;
+
+  private int homeBasePremium;
+  private int carBasePremium;
+  private int lifeBasePremium;
 
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
     obj = new Database();
+    Home obj1 = new Home(name, age, numberOfPolicies, options);
+    obj1.calculateBasePremium();
+    homeBasePremium = obj1.homeBasePremium;
+
+    Car obj2 = new Car(name, age, numberOfPolicies, options);
+    obj2.calculateBasePremium();
+    carBasePremium = obj2.carBasePremium;
+
+    Life obj3 = new Life(name, age, numberOfPolicies, options);
+    obj3.calculateBasePremium();
+    lifeBasePremium = obj3.lifeBasePremium;
   }
 
   public void printDatabase() {
@@ -24,7 +42,7 @@ public class InsuranceSystem {
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
     ArrayList<String> userPolicies = obj.getUserPolicies();
-  
+
     // Checks how many profiles there are in the database and prints it
     if (userDatabase.size() == 0) {
       System.out.printf("Database has %s profile%s%s%n", 0, "s", ".");
@@ -33,8 +51,11 @@ public class InsuranceSystem {
     } else {
       System.out.printf("Database has %s profile%s%s%n", userDatabase.size(), "s", ":");
     }
-  
-    // Print the currently loaded profile with *** before the name and the unloaded profiles without it
+
+    totalPremium = homeBasePremium + carBasePremium + lifeBasePremium;
+
+    // Print the currently loaded profile with *** before the name and the unloaded profiles without
+    // it
     for (int i = 0; i < userDatabase.size(); i++) {
       HashMap<String, Integer> countMap = new HashMap<>();
       String user = userDatabase.get(i);
@@ -46,24 +67,149 @@ public class InsuranceSystem {
       int numberOfPolicies = countMap.getOrDefault(user, 0);
       if (loadedUser.contains(user)) {
         if (numberOfPolicies == 1) {
-          if (policyType == "home"){
-            System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
-            System.out.printf("\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n", options[1], options[0]);
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium);
           }
-          
-        } else {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+        } else if (numberOfPolicies == 2) {
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium * 0.9);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium * 0.9);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium * 0.9);
+          }
+        } else if (numberOfPolicies >= 3) {
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium * 0.8);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium * 0.8);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium * 0.8);
+          }
         }
       } else {
         if (numberOfPolicies == 1) {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y");
-        } else {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies");
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium);
+          }
+        } else if (numberOfPolicies == 2) {
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium * 0.9);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium * 0.9);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium * 0.9);
+          }
+        } else if (numberOfPolicies >= 3) {
+          if (policyType == "home") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tHome Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], homeBasePremium, homeBasePremium * 0.8);
+          } else if (policyType == "car") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tCar Policy (%s, Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[1], options[0], carBasePremium, carBasePremium * 0.8);
+          } else if (policyType == "life") {
+            System.out.printf(
+                " %s%s: %s, %s, %s polic%s%n",
+                "", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            System.out.printf(
+                "\tLife Policy (Sum Insured: $%s, Premium: $%s -> $%s)%n",
+                options[0], lifeBasePremium, lifeBasePremium * 0.8);
+          }
         }
       }
     }
   }
-  
 
   public void createNewProfile(String userName, String age) {
     ArrayList<String> loadedUser = obj.getLoadedUser();
@@ -74,6 +220,7 @@ public class InsuranceSystem {
     } else {
       // Calling previously made function from Database class
       obj.storeInDatabase(userName, age);
+      this.age = age;
     }
   }
 
@@ -143,11 +290,10 @@ public class InsuranceSystem {
 
     ArrayList<String> userPolicies = obj.getUserPolicies();
 
-    if ((loadedUser.size() == 1)){
+    if ((loadedUser.size() == 1)) {
       System.out.printf("New %s policy created for %s.%n", policyType, name);
       userPolicies.add(name);
-    }
-    else {
+    } else {
       System.out.println("Need to load a profile in order to create a policy.");
     }
   }
