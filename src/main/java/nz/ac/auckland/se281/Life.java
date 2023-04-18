@@ -4,11 +4,14 @@ package nz.ac.auckland.se281;
 public class Life extends Policy{
     int ageInt = Integer.parseInt(age);
     int lifeBasePremium;
-    int sumInsured = Integer.parseInt(options[0]);
+    int sumInsured;
 
 
     public Life(String name, String age, int numberOfPolicies, String[] options) {
         super(name, age, numberOfPolicies, options);
+
+        // Initialize sumInsured and isRented after options array has been initialized
+        sumInsured = Integer.parseInt(options[0]);
     }
 
     @Override

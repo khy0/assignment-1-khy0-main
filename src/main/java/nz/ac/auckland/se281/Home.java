@@ -2,11 +2,15 @@ package nz.ac.auckland.se281;
 
 public class Home extends Policy {
     int homeBasePremium;
-    int sumInsured = Integer.parseInt(options[0]);
-    boolean isRented = Boolean.parseBoolean(options[2]);
+    int sumInsured;
+    boolean isRented;
 
     public Home(String name, String age, int numberOfPolicies, String[] options) {
         super(name, age, numberOfPolicies, options);
+
+        // Initialize sumInsured and isRented after options array has been initialized
+        sumInsured = Integer.parseInt(options[0]);
+        isRented = Boolean.parseBoolean(options[2]);
     }
 
     @Override
@@ -18,3 +22,4 @@ public class Home extends Policy {
         }
     }
 }
+

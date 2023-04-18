@@ -1,13 +1,17 @@
 package nz.ac.auckland.se281;
 
 public class Car extends Policy{
-    boolean mechanicalBreakdown = Boolean.parseBoolean(options[3]);
+    boolean mechanicalBreakdown;
     int ageInt = Integer.parseInt(age);
     int carBasePremium;
-    int sumInsured = Integer.parseInt(options[0]);
+    int sumInsured;
 
     public Car(String name, String age, int numberOfPolicies, String[] options) {
         super(name, age, numberOfPolicies, options);
+
+        // Initialize sumInsured and isRented after options array has been initialized
+        sumInsured = Integer.parseInt(options[0]);
+        mechanicalBreakdown = Boolean.parseBoolean(options[3]);
     }
 
     @Override
