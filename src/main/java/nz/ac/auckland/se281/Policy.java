@@ -3,13 +3,13 @@ package nz.ac.auckland.se281;
 public abstract class Policy {
     String name;
     String age;
-    String policyType;
+    int numberOfPolicies;
     String[] options;
 
-    public Policy(String name, String age, String policyType, String[] options) {
+    public Policy(String name, String age, int numberOfPolicies, String[] options) {
         this.name = name;
         this.age = age;
-        this.policyType = policyType;
+        this.numberOfPolicies = numberOfPolicies;
         this.options = options;
     }
 

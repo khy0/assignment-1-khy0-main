@@ -5,8 +5,8 @@ public class Home extends Policy {
     int sumInsured = Integer.parseInt(options[0]);
     boolean isRented = Boolean.parseBoolean(options[2]);
 
-    public Home(String name, String age, String policyType, String[] options) {
-        super(name, age, policyType, options);
+    public Home(String name, String age, int numberOfPolicies, String[] options) {
+        super(name, age, numberOfPolicies, options);
     }
 
     @Override

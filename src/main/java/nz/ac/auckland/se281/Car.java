@@ -6,8 +6,8 @@ public class Car extends Policy{
     int carBasePremium;
     int sumInsured = Integer.parseInt(options[0]);
 
-    public Car(String name, String age, String policyType, String[] options) {
-        super(name, age, policyType, options);
+    public Car(String name, String age, int numberOfPolicies, String[] options) {
+        super(name, age, numberOfPolicies, options);
     }
 
     @Override
