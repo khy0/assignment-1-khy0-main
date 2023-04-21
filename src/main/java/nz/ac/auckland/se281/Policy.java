@@ -21,5 +21,8 @@ public abstract class Policy {
     public String getUserName() {
         return userName;
     }
+
+    public abstract String toString(int userPoliciesCount);
 }
+
 
