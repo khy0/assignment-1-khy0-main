@@ -9,6 +9,7 @@ public class Database {
   private ArrayList<String> ageDatabase;
   private ArrayList<String> loadedUser;
   private ArrayList<String> userPolicies;
+  private ArrayList<Policy> policies;
 
   public Database() {
     // Defining ArrayLists for user and age
@@ -16,6 +17,7 @@ public class Database {
     ageDatabase = new ArrayList<>();
     loadedUser = new ArrayList<>();
     userPolicies = new ArrayList<>();
+    policies = new ArrayList<>();
   }
 
   public ArrayList<String> getUserDatabase() {
@@ -33,6 +35,10 @@ public class Database {
   public ArrayList<String> getUserPolicies() {
     return userPolicies;
   }
+
+  public ArrayList<Policy> getPolicies() {
+    return policies;
+}
 
   public void storeInDatabase(String userName, String age) {
     // Processes the string in title case

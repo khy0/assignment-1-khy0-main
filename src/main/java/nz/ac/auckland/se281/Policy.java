@@ -1,17 +1,25 @@
 package nz.ac.auckland.se281;
 
 public abstract class Policy {
-    String name;
-    String age;
-    int numberOfPolicies;
-    String[] options;
+    protected String userName;
+    protected String userAge;
+    protected int numberOfPolicies;
+    protected int sumInsured;
+    protected int basePremium;
+    protected int totalPremium;
 
-    public Policy(String name, String age, int numberOfPolicies, String[] options) {
-        this.name = name;
-        this.age = age;
+    public Policy(String userName, String userAge, int numberOfPolicies) {
+        this.userName = userName;
+        this.userAge = userAge;
         this.numberOfPolicies = numberOfPolicies;
-        this.options = options;
     }
 
     public abstract void calculateBasePremium();
+
+    public abstract void calculateTotalPremium();
+
+    public String getUserName() {
+        return userName;
+    }
 }
+

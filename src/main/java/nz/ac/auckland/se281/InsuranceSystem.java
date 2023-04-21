@@ -16,10 +16,6 @@ public class InsuranceSystem {
   String age;
   PolicyType type;
 
-  private int homeBasePremium;
-  private int carBasePremium;
-  private int lifeBasePremium;
-
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
     obj = new Database();
@@ -43,7 +39,11 @@ public class InsuranceSystem {
       System.out.printf("Database has %s profile%s%s%n", userDatabase.size(), "s", ":");
     }
 
-    totalPremium = homeBasePremium + carBasePremium + lifeBasePremium;
+    // Calculate the total premium using the totalPremium field from each policy object
+    totalPremium = 0;
+    for (Policy policy : policies) {
+        totalPremium += policy.totalPremium;
+    }
 
     // Print the currently loaded profile with *** before the name and the unloaded profiles without
     // it
@@ -81,7 +81,6 @@ public class InsuranceSystem {
 
       if (loadedUser.contains(user)) {
         // Print the policies created for each profile
-        System.out.println("Policies:");
         for (Policy policy : policies) {
           if (policy.getUserName().equals(user)) {
             System.out.println(" " + policy.toString());
@@ -180,15 +179,15 @@ public class InsuranceSystem {
     if (type == PolicyType.HOME) {
       Home obj1 = new Home(name, age, numberOfPolicies, options);
       obj1.calculateBasePremium();
-      homeBasePremium = obj1.homeBasePremium;
-    } else if (type == PolicyType.CAR) {
+      obj.getPolicies().add(obj1);
+  } else if (type == PolicyType.CAR) {
       Car obj2 = new Car(name, age, numberOfPolicies, options);
       obj2.calculateBasePremium();
-      carBasePremium = obj2.carBasePremium;
-    } else if (type == PolicyType.LIFE) {
+      obj.getPolicies().add(obj2);
+  } else if (type == PolicyType.LIFE) {
       Life obj3 = new Life(name, age, numberOfPolicies, options);
       obj3.calculateBasePremium();
-      lifeBasePremium = obj3.lifeBasePremium;
-    }
+      obj.getPolicies().add(obj3);
+  }
   }
 }
