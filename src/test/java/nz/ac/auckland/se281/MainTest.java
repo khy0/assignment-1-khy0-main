@@ -12,9 +12,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
   //MainTest.Task1.class,
-  //MainTest.Task2.class, // Uncomment this line when to start Task 2
+  MainTest.Task2.class, // Uncomment this line when to start Task 2
   MainTest.Task3.class, // Uncomment this line when to start Task 3
-  // MainTest.YourTests.class, // Uncomment this line to run your own tests
+  MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
 public class MainTest {
   public static class Task1 extends CliTest {
@@ -466,17 +466,62 @@ public class MainTest {
     }
 
     @Test
-    public void TY_01_your_own_test() throws Exception {
-      // Write your own test here, in the same format as the other tests.
-      runCommands(PRINT_DB);
-      assertContains("");
+    public void T2_M01_load_invalid_profile_while_already_loaded() throws Exception {
+      runCommands(
+          unpack(CREATE_SOME_CLIENTS, LOAD_PROFILE, "jorDAN", LOAD_PROFILE, "toBY", PRINT_DB));
+
+      assertContains("Profile loaded for Jordan.");
+      assertContains("No profile found for Toby. Profile not loaded.");
+      assertContains("Database has 3 profiles:");
+      assertContains("*** 1: Jordan, 21");
+
+      assertDoesNotContain("Profile loaded for Toby.", true);
     }
 
     @Test
-    public void TY_02_your_own_test() throws Exception {
-      // Write your own test here, in the same format as the other tests.
-      runCommands(PRINT_DB);
-      assertContains("");
+    public void T2_M02_create_profile_when_profile_loaded() throws Exception {
+      runCommands(
+          unpack(CREATE_SOME_CLIENTS, LOAD_PROFILE, "TOM", CREATE_PROFILE, "tOBy", "28", PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("Cannot create a new profile. First unload the profile for Tom.");
+      assertContains("Database has 3 profiles:");
+
+      assertDoesNotContain("Database has 4 profiles:", true);
+      assertDoesNotContain("4: Tom, 28", true);
+    }
+
+    @Test
+    public void T2_M03_create_profile_after_profile_loaded() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_SOME_CLIENTS,
+              LOAD_PROFILE,
+              "toM",
+              UNLOAD_PROFILE,
+              CREATE_PROFILE,
+              "ToBy",
+              "28",
+              PRINT_DB));
+
+      assertContains("Profile loaded for Tom.");
+      assertContains("Profile unloaded for Tom.");
+      assertContains("New profile created for Toby with age 28.");
+      assertContains("Database has 4 profiles:");
+      assertContains("4: Toby, 28");
+
+      assertDoesNotContain("Cannot create a new profile. First unload the profile for Tom.", true);
+      assertDoesNotContain("Database has 3 profiles:", true);
+    }
+
+    @Test
+    public void T2_M04_delete_profile_not_found() throws Exception {
+      runCommands(unpack(CREATE_SOME_CLIENTS, DELETE_PROFILE, "samUEl", PRINT_DB));
+
+      assertContains("Database has 3 profiles:");
+      assertContains("No profile found for Samuel. No profile was deleted.");
+
+      assertDoesNotContain("Profile deleted for Samuel.", true);
     }
   }
 
