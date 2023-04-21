@@ -20,8 +20,6 @@ public class InsuranceSystem {
   private int carBasePremium;
   private int lifeBasePremium;
 
-  HashMap<String, ArrayList<Policy>> policyDataStorage = new HashMap<>();
-
   public InsuranceSystem() {
     // Only this constructor can be used (if you need to initialise fields).
     obj = new Database();
@@ -34,6 +32,7 @@ public class InsuranceSystem {
     ArrayList<String> ageDatabase = obj.getAgeDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
     ArrayList<String> userPolicies = obj.getUserPolicies();
+    ArrayList<Policy> policies = obj.getPolicies();
 
     // Checks how many profiles there are in the database and prints it
     if (userDatabase.size() == 0) {
@@ -57,19 +56,36 @@ public class InsuranceSystem {
         }
       }
       int numberOfPolicies = countMap.getOrDefault(user, 0);
-      
+
       if (loadedUser.contains(user)) {
         if (numberOfPolicies == 1) {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+          System.out.printf(
+              " %s%s: %s, %s, %s polic%s%n",
+              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
         } else {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "*** ", i+1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+          System.out.printf(
+              " %s%s: %s, %s, %s polic%s%n",
+              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
         }
       } else {
-        
         if (numberOfPolicies == 1) {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y");
+          System.out.printf(
+              " %s%s: %s, %s, %s polic%s%n",
+              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y");
         } else {
-          System.out.printf(" %s%s: %s, %s, %s polic%s%n", "", i+1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies");
+          System.out.printf(
+              " %s%s: %s, %s, %s polic%s%n",
+              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies");
+        }
+      }
+
+      if (loadedUser.contains(user)) {
+        // Print the policies created for each profile
+        System.out.println("Policies:");
+        for (Policy policy : policies) {
+          if (policy.getUserName().equals(user)) {
+            System.out.println(" " + policy.toString());
+          }
         }
       }
     }
@@ -155,28 +171,24 @@ public class InsuranceSystem {
     ArrayList<String> userPolicies = obj.getUserPolicies();
 
     if ((loadedUser.size() == 1)) {
+      numberOfPolicies++; // Increment the number of policies before creating a new policy
       System.out.printf("New %s policy created for %s.%n", policyType, name);
       userPolicies.add(name);
     } else {
       System.out.println("Need to load a profile in order to create a policy.");
     }
-    
-
-    if (type == PolicyType.HOME){
+    if (type == PolicyType.HOME) {
       Home obj1 = new Home(name, age, numberOfPolicies, options);
       obj1.calculateBasePremium();
       homeBasePremium = obj1.homeBasePremium;
-    }
-    else if (type == PolicyType.CAR){
+    } else if (type == PolicyType.CAR) {
       Car obj2 = new Car(name, age, numberOfPolicies, options);
       obj2.calculateBasePremium();
       carBasePremium = obj2.carBasePremium;
-    }
-    else if (type == PolicyType.LIFE){
+    } else if (type == PolicyType.LIFE) {
       Life obj3 = new Life(name, age, numberOfPolicies, options);
       obj3.calculateBasePremium();
       lifeBasePremium = obj3.lifeBasePremium;
     }
   }
 }
-

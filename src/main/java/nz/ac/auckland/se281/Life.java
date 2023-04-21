@@ -27,4 +27,10 @@ public class Life extends Policy{
             System.out.printf("%s already has a life policy. No new policy was created.%n", name);
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("Life Policy (Sum Insured: $%d, Premium: $%d -> $%d)", sumInsured, lifeBasePremium, lifeBasePremium);
+    }
 }
+

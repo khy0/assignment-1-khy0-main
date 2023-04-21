@@ -5,7 +5,7 @@ import java.util.List;
 public class Profile {
     private String name;
     private int age;
-    private List<InsurancePolicy> policies;
+    private List<InsuranceSystem> policies;
 
     // Constructor
     public Profile(String name, int age) {
@@ -30,11 +30,11 @@ public class Profile {
         this.age = age;
     }
 
-    public List<InsurancePolicy> getPolicies() {
+    public List<InsuranceSystem> getPolicies() {
         return policies;
     }
 
-    public void setPolicies(List<InsurancePolicy> policies) {
+    public void setPolicies(List<InsuranceSystem> policies) {
         this.policies = policies;
     }
 

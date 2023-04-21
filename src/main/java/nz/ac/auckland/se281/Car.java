@@ -30,4 +30,9 @@ public class Car extends Policy{
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("Car Policy (%s, Sum Insured: $%d, Premium: $%d -> $%d)", options[1], sumInsured, carBasePremium, carBasePremium);
+    }
 }

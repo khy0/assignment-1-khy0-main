@@ -21,5 +21,10 @@ public class Home extends Policy {
             homeBasePremium = (int) (sumInsured * 0.01);
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("Home Policy (Sum Insured: $%d, Premium: $%d -> $%d)", sumInsured, homeBasePremium, homeBasePremium);
+    }
 }
 
