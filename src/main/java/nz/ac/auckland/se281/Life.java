@@ -1,24 +1,27 @@
 package nz.ac.auckland.se281;
 
 public class Life extends Policy {
-    public Life(String userName, String userAge, int numberOfPolicies, String[] options) throws IllegalArgumentException {
-        super(userName, userAge, numberOfPolicies);
+  public Life(String userName, String userAge, int numberOfPolicies, String[] options)
+      throws IllegalArgumentException {
+    super(userName, userAge, numberOfPolicies);
 
-        int ageInt = Integer.parseInt(userAge);
-        if (ageInt > 100) {
-            throw new IllegalArgumentException(String.format("%s is over the age limit. No policy was created.", userName));
-        }
-
-        this.sumInsured = Integer.parseInt(options[0]);
-        calculateBasePremium();
+    // Check if the user is over the age limit 
+    int ageInt = Integer.parseInt(userAge);
+    if (ageInt > 100) {
+      throw new IllegalArgumentException(
+          String.format("%s is over the age limit. No policy was created.", userName));
     }
 
-    @Override
-    public void calculateBasePremium() {
-        int ageInt = Integer.parseInt(userAge);
-        basePremium = (int) (sumInsured * ((1 + (ageInt / 100.0))/100));
-        //calculateTotalPremium();
-    }
+    this.sumInsured = Integer.parseInt(options[0]);
+    calculateBasePremium();
+  }
+
+  @Override
+  public void calculateBasePremium() {
+    // Calculate the base premium based on the age of the user 
+    int ageInt = Integer.parseInt(userAge);
+    basePremium = (int) (sumInsured * ((1 + (ageInt / 100.0)) / 100));
+  }
 
   @Override
   public void calculateTotalPremium(int userPoliciesCount) {

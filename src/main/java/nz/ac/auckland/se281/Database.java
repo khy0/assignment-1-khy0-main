@@ -38,17 +38,17 @@ public class Database {
 
   public ArrayList<Policy> getPolicies() {
     return policies;
-}
+  }
 
   public void storeInDatabase(String userName, String age) {
-    // Processes the string in title case
+    // Processes the string in title case 
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
 
-    // Adds the userName and age to the database ArrayLists
+    // Adds the userName and age to the database ArrayLists 
     userDatabase.add(userName);
     ageDatabase.add(age);
 
-    // Defining a HashSet to make a unique set of strings inside the user database
+    // Defining a HashSet to make a unique set of strings inside the user database 
     HashSet<String> uniqueSet = new HashSet<String>(userDatabase);
 
     // Converting age string to age integer

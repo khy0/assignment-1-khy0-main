@@ -13,25 +13,25 @@ public class Home extends Policy {
 
   @Override
   public void calculateBasePremium() {
+    // Calculate the base premium based on whether the home is rented or not
     if (rented) {
       basePremium = (int) (sumInsured * 0.02); // 2% of the sum insured
     } else {
       basePremium = (int) (sumInsured * 0.01); // 1% of the sum insured
     }
-    //calculateTotalPremium();
   }
 
   @Override
-    public void calculateTotalPremium(int userPoliciesCount) {
-        totalPremium = basePremium;
+  public void calculateTotalPremium(int userPoliciesCount) {
+    totalPremium = basePremium;
 
-        // Apply discounts based on the number of policies
-        if (userPoliciesCount == 2) {
-            totalPremium = (int) (totalPremium * 0.90); // 10% discount
-        } else if (userPoliciesCount >= 3) {
-            totalPremium = (int) (totalPremium * 0.80); // 20% discount
-        }
+    // Apply discounts based on the number of policies
+    if (userPoliciesCount == 2) {
+      totalPremium = (int) (totalPremium * 0.90); // 10% discount
+    } else if (userPoliciesCount >= 3) {
+      totalPremium = (int) (totalPremium * 0.80); // 20% discount
     }
+  }
 
   @Override
   public String toString(int userPoliciesCount) {

@@ -45,8 +45,7 @@ public class InsuranceSystem {
       totalPremium += policy.totalPremium;
     }
 
-    // Print the currently loaded profile with *** before the name and the unloaded profiles without
-    // it
+    // Print the total premium for all policies in the database
     for (int i = 0; i < userDatabase.size(); i++) {
       HashMap<String, Integer> countMap = new HashMap<>();
       String user = userDatabase.get(i);
@@ -67,35 +66,60 @@ public class InsuranceSystem {
         }
       }
 
+      // Print the profile with the correct number of policies and the correct sum of discounted
       if (loadedUser.contains(user)) {
         if (numberOfPolicies == 1) {
           System.out.printf(
-            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
-              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y", sumOfDiscountedPremiums);
+              " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "*** ",
+              i + 1,
+              loadedUser.get(0),
+              ageDatabase.get(i),
+              numberOfPolicies,
+              "y",
+              sumOfDiscountedPremiums);
         } else {
           System.out.printf(
-            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
-              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies", sumOfDiscountedPremiums);
+              " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "*** ",
+              i + 1,
+              loadedUser.get(0),
+              ageDatabase.get(i),
+              numberOfPolicies,
+              "ies",
+              sumOfDiscountedPremiums);
         }
       } else {
         if (numberOfPolicies == 1) {
           System.out.printf(
-            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
-              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y", sumOfDiscountedPremiums);
+              " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "",
+              i + 1,
+              userDatabase.get(i),
+              ageDatabase.get(i),
+              numberOfPolicies,
+              "y",
+              sumOfDiscountedPremiums);
         } else {
           System.out.printf(
               " %s%s: %s, %s, %s polic%s for a total of $%s%n",
-              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies", sumOfDiscountedPremiums);
+              "",
+              i + 1,
+              userDatabase.get(i),
+              ageDatabase.get(i),
+              numberOfPolicies,
+              "ies",
+              sumOfDiscountedPremiums);
         }
       }
 
-      // Print the policies created for each profile
+      // Print the policies created for each profile in the database
       for (Policy policy : policies) {
         if (policy.getUserName().equals(user)) {
-            userPoliciesCount = countMap.getOrDefault(user, 0);
-            System.out.println(" " + policy.toString(userPoliciesCount));
+          userPoliciesCount = countMap.getOrDefault(user, 0);
+          System.out.println(" " + policy.toString(userPoliciesCount));
         }
-    }
+      }
     }
   }
 
@@ -103,6 +127,7 @@ public class InsuranceSystem {
     ArrayList<String> loadedUser = obj.getLoadedUser();
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
 
+    // If there is a profile loaded, do not create a new profile
     if (loadedUser.size() == 1) {
       System.out.printf("Cannot create a new profile. First unload the profile for %s.%n", name);
     } else {
@@ -115,8 +140,8 @@ public class InsuranceSystem {
   public void loadProfile(String userName) {
     ArrayList<String> userDatabase = obj.getUserDatabase();
     ArrayList<String> loadedUser = obj.getLoadedUser();
-
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
+    
     // If the user is in the database and there is no profile loaded, load the profile
     if (userDatabase.contains(userName) && loadedUser.size() == 0) {
       loadedUser.add(userName);
@@ -139,7 +164,7 @@ public class InsuranceSystem {
     ArrayList<String> loadedUser = obj.getLoadedUser();
 
     if (loadedUser.size() == 1) {
-      // remove loaded profile from loadedUser and add to userDatabase with original index position
+      // Remove loaded profile from loadedUser and add to userDatabase with original index position
       // from before it was loaded
       loadedUser.remove(0);
       System.out.printf("Profile unloaded for %s.%n", name);
@@ -155,6 +180,7 @@ public class InsuranceSystem {
 
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
 
+    // If there is a profile loaded, do not delete the profile and print error message to user
     if (loadedUser.size() == 1) {
       System.out.printf(
           "Cannot delete profile for %s while loaded. No profile was deleted.%n", userName);
@@ -175,18 +201,20 @@ public class InsuranceSystem {
     ArrayList<Policy> policies = obj.getPolicies();
     int userPoliciesCount = 0;
 
+    // Count the number of policies for the user
     for (String policyUser : obj.getUserPolicies()) {
-        if (policyUser.equals(userName)) {
-            userPoliciesCount++;
-        }
+      if (policyUser.equals(userName)) {
+        userPoliciesCount++;
+      }
     }
 
+    // Apply the discounts to the policies for the user
     for (Policy policy : policies) {
-        if (policy.getUserName().equals(userName)) {
-            policy.calculateTotalPremium(userPoliciesCount);
-        }
+      if (policy.getUserName().equals(userName)) {
+        policy.calculateTotalPremium(userPoliciesCount);
+      }
     }
-}
+  }
 
   public void createPolicy(PolicyType type, String[] options) {
     ArrayList<String> loadedUser = obj.getLoadedUser();
@@ -199,62 +227,66 @@ public class InsuranceSystem {
     String userName = "";
     String userAge = "";
 
+    // If there is no profile loaded, do not create a policy and print error message to user
     if ((loadedUser.size() == 1)) {
-        userName = loadedUser.get(0);
-        int userIndex = obj.getUserDatabase().indexOf(userName);
-        userAge = obj.getAgeDatabase().get(userIndex);
+      userName = loadedUser.get(0);
+      int userIndex = obj.getUserDatabase().indexOf(userName);
+      userAge = obj.getAgeDatabase().get(userIndex);
 
-        for (String policyUser : userPolicies) {
-            if (policyUser.equals(userName)) {
-                userPoliciesCount++;
-            }
+      // Count the number of policies for the user and add to userPoliciesCount
+      for (String policyUser : userPolicies) {
+        if (policyUser.equals(userName)) {
+          userPoliciesCount++;
         }
+      }
 
-        if (type == PolicyType.HOME) {
-            userPoliciesCount++;
-            Home obj1 = new Home(userName, userAge, userPoliciesCount, options);
-            obj1.calculateBasePremium();
-            obj.getPolicies().add(obj1);
-            userPolicies.add(userName);
-            System.out.printf("New %s policy created for %s.%n", policyType, userName);
-            applyDiscountsToPolicies(userName); // Moved here
-        } else if (type == PolicyType.CAR) {
-            userPoliciesCount++;
-            Car obj2 = new Car(userName, userAge, userPoliciesCount, options);
-            obj2.calculateBasePremium();
-            obj.getPolicies().add(obj2);
-            userPolicies.add(userName);
-            System.out.printf("New %s policy created for %s.%n", policyType, userName);
-            applyDiscountsToPolicies(userName); // Moved here
-        } else if (type == PolicyType.LIFE) {
-            // Count the number of life policies for the user
-            int lifePoliciesCount = 0;
-            for (Policy policy : obj.getPolicies()) {
-                if (policy instanceof Life && policy.getUserName().equals(userName)) {
-                    lifePoliciesCount++;
-                }
-            }
-            // Only create a new life policy if the user doesn't have one
-            try {
-                if (lifePoliciesCount == 0) {
-                    Life obj3 = new Life(userName, userAge, userPoliciesCount, options);
-                    obj3.calculateBasePremium();
-                    if (obj3.basePremium != 0) { // Check if the base premium is not 0
-                        obj.getPolicies().add(obj3);
-                        userPoliciesCount++;
-                        userPolicies.add(userName);
-                        System.out.printf("New %s policy created for %s.%n", policyType, userName);
-                    }
-                } else {
-                    System.out.printf("%s already has a life policy. No new policy was created.%n", userName);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            applyDiscountsToPolicies(userName); // Moved here
+      // Create the policy for the user and add to the policies ArrayList 
+      if (type == PolicyType.HOME) {
+        userPoliciesCount++;
+        Home obj1 = new Home(userName, userAge, userPoliciesCount, options);
+        obj1.calculateBasePremium();
+        obj.getPolicies().add(obj1);
+        userPolicies.add(userName);
+        System.out.printf("New %s policy created for %s.%n", policyType, userName);
+        applyDiscountsToPolicies(userName);
+      } else if (type == PolicyType.CAR) {
+        userPoliciesCount++;
+        Car obj2 = new Car(userName, userAge, userPoliciesCount, options);
+        obj2.calculateBasePremium();
+        obj.getPolicies().add(obj2);
+        userPolicies.add(userName);
+        System.out.printf("New %s policy created for %s.%n", policyType, userName);
+        applyDiscountsToPolicies(userName);
+      } else if (type == PolicyType.LIFE) {
+        // Count the number of life policies for the user
+        int lifePoliciesCount = 0;
+        for (Policy policy : obj.getPolicies()) {
+          if (policy instanceof Life && policy.getUserName().equals(userName)) {
+            lifePoliciesCount++;
+          }
         }
+        // Only create a new life policy if the user doesn't have one
+        try {
+          if (lifePoliciesCount == 0) {
+            Life obj3 = new Life(userName, userAge, userPoliciesCount, options);
+            obj3.calculateBasePremium();
+            if (obj3.basePremium != 0) { // Check if the base premium is not 0
+              obj.getPolicies().add(obj3);
+              userPoliciesCount++;
+              userPolicies.add(userName);
+              System.out.printf("New %s policy created for %s.%n", policyType, userName);
+            }
+          } else {
+            System.out.printf(
+                "%s already has a life policy. No new policy was created.%n", userName);
+          }
+        } catch (Exception e) {
+          System.out.println(e.getMessage());
+        }
+        applyDiscountsToPolicies(userName);
+      }
     } else {
-        System.out.println("Need to load a profile in order to create a policy.");
+      System.out.println("Need to load a profile in order to create a policy.");
     }
-}
+  }
 }

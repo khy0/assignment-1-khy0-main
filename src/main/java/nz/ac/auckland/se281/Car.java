@@ -3,7 +3,7 @@ package nz.ac.auckland.se281;
 public class Car extends Policy {
   private String makeAndModel;
   private boolean mechanicalBreakdown;
-  
+
   public Car(String userName, String userAge, int numberOfPolicies, String[] options) {
     super(userName, userAge, numberOfPolicies);
     this.sumInsured = Integer.parseInt(options[0]);
@@ -16,6 +16,7 @@ public class Car extends Policy {
     System.out.println("User Age: " + userAge);
     int ageInt = Integer.parseInt(userAge);
 
+    // Calculate the base premium based on the age of the user and whether they have mechanical breakdown cover
     if (mechanicalBreakdown) {
       if (ageInt < 25) {
         basePremium = (int) (sumInsured * 0.15) + 80;
@@ -29,14 +30,13 @@ public class Car extends Policy {
         basePremium = (int) (sumInsured * 0.10);
       }
     }
-    //calculateTotalPremium();
   }
 
   @Override
   public void calculateTotalPremium(int userPoliciesCount) {
     totalPremium = basePremium;
 
-    // Apply discounts based on the number of policies
+    // Apply discounts based on the number of policies the user has 
     if (userPoliciesCount == 2) {
       totalPremium = (int) (totalPremium * 0.90); // 10% discount
     } else if (userPoliciesCount >= 3) {
