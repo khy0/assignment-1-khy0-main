@@ -3,15 +3,15 @@ package nz.ac.auckland.se281;
 public abstract class Policy {
     protected String userName;
     protected String userAge;
-    protected int userPoliciesCount;
+    protected int numberOfPolicies;
     protected int sumInsured;
     protected int basePremium;
     protected int totalPremium;
 
-    public Policy(String userName, String userAge, int userPoliciesCount) {
+    public Policy(String userName, String userAge, int numberOfPolicies) {
         this.userName = userName;
         this.userAge = userAge;
-        this.userPoliciesCount = userPoliciesCount;
+        this.numberOfPolicies = numberOfPolicies;
     }
 
     public abstract void calculateBasePremium();

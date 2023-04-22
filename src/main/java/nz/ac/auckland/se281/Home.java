@@ -26,9 +26,9 @@ public class Home extends Policy {
     totalPremium = basePremium;
 
     // Apply discounts based on the number of policies
-    if (userPoliciesCount == 2) {
+    if (numberOfPolicies == 2) {
       totalPremium = (int) (totalPremium * 0.90); // 10% discount
-    } else if (userPoliciesCount >= 3) {
+    } else if (numberOfPolicies >= 3) {
       totalPremium = (int) (totalPremium * 0.80); // 20% discount
     }
   }
