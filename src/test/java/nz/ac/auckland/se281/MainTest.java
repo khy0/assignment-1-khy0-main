@@ -524,6 +524,7 @@ public class MainTest {
       assertDoesNotContain("Profile deleted for Samuel.", true);
     }
   }
+  
 
   private static final Object[] CREATE_SOME_CLIENTS =
       new Object[] {

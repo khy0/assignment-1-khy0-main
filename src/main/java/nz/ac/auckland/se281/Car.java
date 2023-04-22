@@ -3,13 +3,11 @@ package nz.ac.auckland.se281;
 public class Car extends Policy {
   private String makeAndModel;
   private boolean mechanicalBreakdown;
-  private String licensePlate;
-
+  
   public Car(String userName, String userAge, int numberOfPolicies, String[] options) {
     super(userName, userAge, numberOfPolicies);
     this.sumInsured = Integer.parseInt(options[0]);
     this.makeAndModel = options[1];
-    this.licensePlate = options[2];
     this.mechanicalBreakdown = options[3].equalsIgnoreCase("yes");
   }
 
