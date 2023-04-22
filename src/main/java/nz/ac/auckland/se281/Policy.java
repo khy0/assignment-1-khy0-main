@@ -16,7 +16,7 @@ public abstract class Policy {
 
     public abstract void calculateBasePremium();
 
-    public abstract void calculateTotalPremium();
+    public abstract void calculateTotalPremium(int userPoliciesCount);
 
     public String getUserName() {
         return userName;

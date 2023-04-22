@@ -16,18 +16,18 @@ public class Life extends Policy {
     @Override
     public void calculateBasePremium() {
         int ageInt = Integer.parseInt(userAge);
-        basePremium = (int) (sumInsured * (1 + (ageInt / 100.0)));
-        calculateTotalPremium();
+        basePremium = (int) (sumInsured * ((1 + (ageInt / 100.0))/100));
+        //calculateTotalPremium();
     }
 
   @Override
-  public void calculateTotalPremium() {
+  public void calculateTotalPremium(int userPoliciesCount) {
     totalPremium = basePremium;
 
     // Apply discounts based on the number of policies
-    if (numberOfPolicies == 2) {
+    if (userPoliciesCount == 2) {
       totalPremium = (int) (totalPremium * 0.90); // 10% discount
-    } else if (numberOfPolicies >= 3) {
+    } else if (userPoliciesCount >= 3) {
       totalPremium = (int) (totalPremium * 0.80); // 20% discount
     }
   }

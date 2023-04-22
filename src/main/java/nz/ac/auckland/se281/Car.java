@@ -31,17 +31,17 @@ public class Car extends Policy {
         basePremium = (int) (sumInsured * 0.10);
       }
     }
-    calculateTotalPremium();
+    //calculateTotalPremium();
   }
 
   @Override
-  public void calculateTotalPremium() {
+  public void calculateTotalPremium(int userPoliciesCount) {
     totalPremium = basePremium;
 
     // Apply discounts based on the number of policies
-    if (numberOfPolicies == 2) {
+    if (userPoliciesCount == 2) {
       totalPremium = (int) (totalPremium * 0.90); // 10% discount
-    } else if (numberOfPolicies >= 3) {
+    } else if (userPoliciesCount >= 3) {
       totalPremium = (int) (totalPremium * 0.80); // 20% discount
     }
   }

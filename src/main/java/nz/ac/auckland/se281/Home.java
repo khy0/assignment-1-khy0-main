@@ -18,20 +18,20 @@ public class Home extends Policy {
     } else {
       basePremium = (int) (sumInsured * 0.01); // 1% of the sum insured
     }
-    calculateTotalPremium();
+    //calculateTotalPremium();
   }
 
   @Override
-  public void calculateTotalPremium() {
-    totalPremium = basePremium;
+    public void calculateTotalPremium(int userPoliciesCount) {
+        totalPremium = basePremium;
 
-    // Apply discounts based on the number of policies
-    if (numberOfPolicies == 2) {
-      totalPremium = (int) (totalPremium * 0.90); // 10% discount
-    } else if (numberOfPolicies >= 3) {
-      totalPremium = (int) (totalPremium * 0.80); // 20% discount
+        // Apply discounts based on the number of policies
+        if (userPoliciesCount == 2) {
+            totalPremium = (int) (totalPremium * 0.90); // 10% discount
+        } else if (userPoliciesCount >= 3) {
+            totalPremium = (int) (totalPremium * 0.80); // 20% discount
+        }
     }
-  }
 
   @Override
   public String toString(int userPoliciesCount) {
