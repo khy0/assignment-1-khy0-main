@@ -51,6 +51,7 @@ public class InsuranceSystem {
       HashMap<String, Integer> countMap = new HashMap<>();
       String user = userDatabase.get(i);
       int userPoliciesCount = 0;
+      int sumOfDiscountedPremiums = 0;
       for (String policyUser : userPolicies) {
         if (policyUser.equals(user)) {
           countMap.put(policyUser, countMap.getOrDefault(policyUser, 0) + 1);
@@ -59,25 +60,32 @@ public class InsuranceSystem {
       }
       int numberOfPolicies = countMap.getOrDefault(user, 0);
 
+      // Calculate sum of discounted premiums for each user
+      for (Policy policy : policies) {
+        if (policy.getUserName().equals(user)) {
+          sumOfDiscountedPremiums += policy.totalPremium;
+        }
+      }
+
       if (loadedUser.contains(user)) {
         if (numberOfPolicies == 1) {
           System.out.printf(
-              " %s%s: %s, %s, %s polic%s%n",
-              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y");
+            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "y", sumOfDiscountedPremiums);
         } else {
           System.out.printf(
-              " %s%s: %s, %s, %s polic%s%n",
-              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies");
+            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "*** ", i + 1, loadedUser.get(0), ageDatabase.get(i), numberOfPolicies, "ies", sumOfDiscountedPremiums);
         }
       } else {
         if (numberOfPolicies == 1) {
           System.out.printf(
-              " %s%s: %s, %s, %s polic%s%n",
-              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y");
+            " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "y", sumOfDiscountedPremiums);
         } else {
           System.out.printf(
-              " %s%s: %s, %s, %s polic%s%n",
-              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies");
+              " %s%s: %s, %s, %s polic%s for a total of $%s%n",
+              "", i + 1, userDatabase.get(i), ageDatabase.get(i), numberOfPolicies, "ies", sumOfDiscountedPremiums);
         }
       }
 
