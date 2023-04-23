@@ -180,22 +180,22 @@ public class InsuranceSystem {
 
     userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
 
-    // If there is a profile loaded, do not delete the profile and print error message to user
-    if (loadedUser.size() == 1) {
-      System.out.printf(
-          "Cannot delete profile for %s while loaded. No profile was deleted.%n", userName);
+    if (loadedUser.size() == 1 && loadedUser.get(0).equals(userName)) {
+        System.out.printf(
+            "Cannot delete profile for %s while loaded. No profile was deleted.%n", userName);
     } else if (userDatabase.contains(userName)) {
-      for (int i = 0; i < userDatabase.size(); i++) {
-        if (userDatabase.get(i).equals(userName)) {
-          userDatabase.remove(userName);
-          ageDatabase.remove(i);
-          System.out.printf("Profile deleted for %s.%n", userName);
+        for (int i = 0; i < userDatabase.size(); i++) {
+            if (userDatabase.get(i).equals(userName)) {
+                userDatabase.remove(userName);
+                ageDatabase.remove(i);
+                System.out.printf("Profile deleted for %s.%n", userName);
+            }
         }
-      }
     } else {
-      System.out.printf("No profile found for %s. No profile was deleted.%n", userName);
+        System.out.printf("No profile found for %s. No profile was deleted.%n", userName);
     }
-  }
+}
+
 
   public void applyDiscountsToPolicies(String userName) {
     ArrayList<Policy> policies = obj.getPolicies();
